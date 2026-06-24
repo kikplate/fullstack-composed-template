@@ -1,0 +1,30 @@
+# {{ .projectName }}
+[![View on KikPlate](https://img.shields.io/static/v1?label=KikPlate&message={{ .kikplateSlug }}&color={{ .kikplateBadgeColor }}&style=flat-square)](https://kikplate.dev/plates/{{ .kikplateSlug }})
+
+{{ .projectDescription }}
+
+## Run with Docker
+
+```bash
+docker compose up --build
+```
+
+Open `http://localhost:{{ .nginxPort }}`.
+
+## Services
+
+- Backend: Node.js Express on `{{ .appPort }}`
+- Frontend: React Vite
+- NGINX: reverse proxy and edge on `{{ .nginxPort }}`
+
+## API
+
+- `GET {{ .apiPrefix }}/health`
+- `GET {{ .apiPrefix }}/todos`
+- `POST {{ .apiPrefix }}/todos`
+
+## Kubernetes
+
+```bash
+kubectl apply -f k8s/
+```

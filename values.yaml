@@ -1,0 +1,28 @@
+projectName: fullstack-app
+projectDescription: Full-stack monorepo app composed from reusable Kikplate templates.
+nodeVersion: "22"
+appPort: 8000
+frontendPort: 5173
+frontendAppTitle: Full Stack App
+apiPrefix: /api
+nginxPort: 8080
+workerConnections: 1024
+keepaliveTimeout: 65
+gzipEnabled: true
+gzipMinLength: 1024
+backendDir: backend
+frontendDir: frontend
+k8sNamespace: default
+backendReplicas: 1
+frontendReplicas: 1
+nginxReplicas: 1
+kikplateSlug: fullstack-composed-template
+kikplateBadgeColor: 0366d6
+
+modules:
+  docker:
+    enabled: true
+  ci:
+    enabled: true
+  kubernetes:
+    enabled: true

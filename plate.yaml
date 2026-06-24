@@ -1,0 +1,159 @@
+name: fullstack-composed-template
+owner: kikplate-public
+description: Composed full-stack template wiring backend, frontend, CI, and nginx templates into one runnable monorepo.
+version: 1.0.0
+
+category: fullstack
+
+tags:
+  - fullstack
+  - monorepo
+  - composition
+  - nodejs
+  - react
+  - nginx
+  - github-actions
+  - kubernetes
+
+schema:
+  projectName:
+    type: string
+    default: fullstack-composed-template
+  projectDescription:
+    type: string
+    default: Composed full-stack template wiring backend, frontend, CI, and nginx templates into one runnable monorepo.
+  nodeVersion:
+    type: string
+    default: "22"
+  appPort:
+    type: int
+    default: 8000
+  frontendPort:
+    type: int
+    default: 5173
+  frontendAppTitle:
+    type: string
+    default: Full Stack App
+  apiPrefix:
+    type: string
+    default: /api
+  nginxPort:
+    type: int
+    default: 8080
+  workerConnections:
+    type: int
+    default: 1024
+  keepaliveTimeout:
+    type: int
+    default: 65
+  gzipEnabled:
+    type: bool
+    default: true
+  gzipMinLength:
+    type: int
+    default: 1024
+  backendDir:
+    type: string
+    default: backend
+  frontendDir:
+    type: string
+    default: frontend
+  k8sNamespace:
+    type: string
+    default: default
+  backendReplicas:
+    type: int
+    default: 1
+  frontendReplicas:
+    type: int
+    default: 1
+  nginxReplicas:
+    type: int
+    default: 1
+  kikplateSlug:
+    type: string
+    default: fullstack-composed-template
+  kikplateBadgeColor:
+    type: string
+    default: 0366d6
+
+modules:
+  docker:
+    enabled: true
+  ci:
+    enabled: true
+  kubernetes:
+    enabled: true
+
+files:
+  - path: .gitignore
+    template: https://raw.githubusercontent.com/kikplate/backend-nodejs-template/main/templates/.gitignore.tmpl
+  - path: README.md
+    template: https://raw.githubusercontent.com/kikplate/fullstack-composed-template/main/templates/README.md.tmpl
+  - path: docker-compose.yml
+    template: https://raw.githubusercontent.com/kikplate/fullstack-composed-template/main/templates/docker-compose.yml.tmpl
+    condition: modules.docker.enabled
+
+  - path: .github/workflows/ci.yml
+    template: https://raw.githubusercontent.com/kikplate/github-actions-template/main/templates/.github/workflows/ci.yml.tmpl
+    condition: modules.ci.enabled
+
+  - path: backend/package.json
+    template: https://raw.githubusercontent.com/kikplate/backend-nodejs-template/main/templates/package.json.tmpl
+  - path: backend/src/index.js
+    template: https://raw.githubusercontent.com/kikplate/backend-nodejs-template/main/templates/src/index.js.tmpl
+  - path: backend/Dockerfile
+    template: https://raw.githubusercontent.com/kikplate/backend-nodejs-template/main/templates/Dockerfile.tmpl
+    condition: modules.docker.enabled
+
+  - path: frontend/package.json
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/package.json.tmpl
+  - path: frontend/index.html
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/index.html.tmpl
+  - path: frontend/tsconfig.json
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/tsconfig.json.tmpl
+  - path: frontend/vite.config.ts
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/vite.config.ts.tmpl
+  - path: frontend/src/main.tsx
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/src/main.tsx.tmpl
+  - path: frontend/src/App.tsx
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/src/App.tsx.tmpl
+  - path: frontend/src/api.ts
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/src/api.ts.tmpl
+  - path: frontend/src/styles.css
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/src/styles.css.tmpl
+  - path: frontend/Dockerfile
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/Dockerfile.tmpl
+    condition: modules.docker.enabled
+  - path: frontend/nginx.conf
+    template: https://raw.githubusercontent.com/kikplate/frontend-react-template/main/templates/nginx.conf.tmpl
+    condition: modules.docker.enabled
+
+  - path: nginx/nginx.conf
+    template: https://raw.githubusercontent.com/kikplate/nginx-http-server-starter/main/templates/nginx.conf.tmpl
+  - path: nginx/mime.types
+    template: https://raw.githubusercontent.com/kikplate/nginx-http-server-starter/main/templates/mime.types.tmpl
+  - path: nginx/conf.d/active.conf
+    template: https://raw.githubusercontent.com/kikplate/nginx-http-server-starter/main/templates/conf.d/active.conf.tmpl
+
+  - path: k8s/backend-deployment.yaml
+    template: https://raw.githubusercontent.com/kikplate/k8s-template/main/templates/k8s/backend-deployment.yaml.tmpl
+    condition: modules.kubernetes.enabled
+  - path: k8s/backend-service.yaml
+    template: https://raw.githubusercontent.com/kikplate/k8s-template/main/templates/k8s/backend-service.yaml.tmpl
+    condition: modules.kubernetes.enabled
+  - path: k8s/frontend-deployment.yaml
+    template: https://raw.githubusercontent.com/kikplate/k8s-template/main/templates/k8s/frontend-deployment.yaml.tmpl
+    condition: modules.kubernetes.enabled
+  - path: k8s/frontend-service.yaml
+    template: https://raw.githubusercontent.com/kikplate/k8s-template/main/templates/k8s/frontend-service.yaml.tmpl
+    condition: modules.kubernetes.enabled
+  - path: k8s/nginx-deployment.yaml
+    template: https://raw.githubusercontent.com/kikplate/k8s-template/main/templates/k8s/nginx-deployment.yaml.tmpl
+    condition: modules.kubernetes.enabled
+  - path: k8s/nginx-service.yaml
+    template: https://raw.githubusercontent.com/kikplate/k8s-template/main/templates/k8s/nginx-service.yaml.tmpl
+    condition: modules.kubernetes.enabled
+  - path: k8s/ingress.yaml
+    template: https://raw.githubusercontent.com/kikplate/k8s-template/main/templates/k8s/ingress.yaml.tmpl
+    condition: modules.kubernetes.enabled

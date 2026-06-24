@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      API_PREFIX: {{ .apiPrefix }}
+      PORT: "{{ .appPort }}"
+    expose:
+      - "{{ .appPort }}"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    expose:
+      - "80"
+
+  nginx:
+    image: nginx:stable-alpine
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "{{ .nginxPort }}:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/mime.types:/etc/nginx/mime.types:ro
+      - ./nginx/conf.d/active.conf:/etc/nginx/conf.d/active.conf:ro
