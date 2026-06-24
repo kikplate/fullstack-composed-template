@@ -40,6 +40,12 @@ schema:
   nginxPort:
     type: int
     default: 8080
+  localPort:
+    type: int
+    default: 8080
+  localRoot:
+    type: string
+    default: ./public
   workerConnections:
     type: int
     default: 1024

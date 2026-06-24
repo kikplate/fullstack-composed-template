@@ -6,6 +6,8 @@ frontendPort: 5173
 frontendAppTitle: Full Stack App
 apiPrefix: /api
 nginxPort: 8080
+localPort: 8080
+localRoot: ./public
 workerConnections: 1024
 keepaliveTimeout: 65
 gzipEnabled: true
