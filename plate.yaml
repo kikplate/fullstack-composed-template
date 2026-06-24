@@ -2,7 +2,7 @@ name: fullstack-composed-template
 owner: kikplate-public
 description: Composed full-stack template wiring backend, frontend, CI, and nginx templates into one runnable monorepo.
 version: 1.0.0
-
+verification_token: f5cf86ab-1f80-47c8-821c-8c5084585def
 category: fullstack
 
 tags:
